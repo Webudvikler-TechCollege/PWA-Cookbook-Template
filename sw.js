@@ -68,6 +68,8 @@ self.addEventListener('fetch',  event => {
 
 // Fetch event
 self.addEventListener('fetch', event => {
+
+    if (!(event.request.url.indexOf('http') == 0)) return
 	// Kontroller svaret på vores request
 	event.respondWith(
 		// Kig efter file match i cache 
@@ -87,3 +89,20 @@ self.addEventListener('fetch', event => {
 	)
 })
 
+// Funktion til styring af antal filer i den given cache
+const limitCacheSize = (cacheName, numberOfAllowedFiles) => {
+	// Vi åbner den angivede cache
+	caches.open(cacheName).then(cache => {
+		// Henter array af cache keys 
+		cache.keys().then(keys => {
+			// Hvis mængden af filer overstiger det tilladte
+			if(keys.length > numberOfAllowedFiles) {
+				// Så slettes første index (ældste fil) og kør funktion igen indtil antal er nået
+				cache.delete(keys[0]).then(limitCacheSize(cacheName, numberOfAllowedFiles))
+			}
+		})
+	})
+}
+
+// Calling limit cache function
+limitCacheSize(dynamicCacheName, 2)
