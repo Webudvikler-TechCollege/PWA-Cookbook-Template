@@ -15,9 +15,8 @@ caches.open("my-cache").then((cache) => {
 	cache.addAll(assets);
   });
   
-  // Install Service Worker
   
-  // Install event
+  // Install event here
   self.addEventListener("install", (event) => {
 	console.log("Service Worker has been installed");
   
@@ -64,13 +63,22 @@ caches.open("my-cache").then((cache) => {
 			return caches.open(dynamicCacheName).then((cache) => {
 			  cache.put(event.request.url, fetchRes.clone());
 			  return fetchRes;
+			  
 			});
 		  })
 		);
 	  })
+	  // ...
+.catch(() => {
+	if(event.request.url.indexOf('.html') > -1) {
+		return caches.match('/fallback.html')
+	}
+})
 	);
   });
-  
+
+  // ...
+
   
 
 	// Limit
