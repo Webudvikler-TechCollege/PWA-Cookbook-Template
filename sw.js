@@ -22,7 +22,6 @@ caches.open("my-cache").then((cache) => {
   
 	event.waitUntil(
 	  caches.open(staticCacheName).then((cache) => {
-		console.log("Write asset files to cache");
 		cache.addAll(assets).catch((error) => {
 		  console.log(error, "Der er en fejl");
 		});
@@ -68,20 +67,15 @@ caches.open("my-cache").then((cache) => {
 		  })
 		);
 	  })
-	  // ...
-.catch(() => {
-	if(event.request.url.indexOf('.html') > -1) {
-		return caches.match('/fallback.html')
-	}
+       .catch(() => {
+	      if(event.request.url.indexOf('.html') > -1) {
+		    return caches.match('/fallback.html')
+	           }
 })
 	);
   });
 
-  // ...
-
-  
-
-	// Limit
+	// LimitCashe is here
 	const limitCacheTwo = (cacheName, numberOfAllowedFiles) => {
 	  caches.open(cacheName).then((cache) => {
 		cache.keys().then((keys) => {
