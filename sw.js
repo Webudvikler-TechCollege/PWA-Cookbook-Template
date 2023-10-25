@@ -106,3 +106,27 @@ const limitCacheSize = (cacheName, numberOfAllowedFiles) => {
 
 // Calling limit cache function
 limitCacheSize(dynamicCacheName, 2)
+
+// Fetch event
+self.addEventListener('fetch', event => {
+
+	// Kontroller svar på request
+	event.respondWith(
+		
+		// Kig efter file match i cache 
+		caches.match(event.request).then(cacheRes => {
+			// Returner match fra cache / hent fil på server
+			// ...
+		}).catch(() => {
+			// Hvis ovenstående giver fejl kaldes fallback siden			
+			return caches.match('/pages/fallback.html')
+		})
+	)
+})
+
+// ...
+.catch(() => {
+	if(event.request.url.indexOf('.html') > -1) {
+		return caches.match('/pages/fallback.html')
+	}
+})
