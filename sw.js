@@ -89,3 +89,29 @@ caches.open("my-cache").then((cache) => {
 	};
   
 	limitCacheTwo(dynamicCacheName, 2);
+
+
+
+	//on user interaction
+
+self.addEventListener('message', (event) => {
+	// console.log('input has been registrated')
+    if (event.data.action === 'user-input') {
+        var id = event.data.articleId;
+
+        // 
+        caches.open('mysite-input-' + id).then(function (cache) {
+            fetch('/get-input-urls?id=' + id)
+                .then(function (response) {
+
+                    return response.json();
+                })
+                .then(function (urls) {
+                    cache.addAll(urls);
+                });
+        });
+    }
+});
+
+
+
