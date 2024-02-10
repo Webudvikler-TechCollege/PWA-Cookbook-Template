@@ -1,0 +1,38 @@
+
+{
+    "name": "PWA Cookbook",
+    "short_name": "Cookbook",
+    "start_url": "/index.html", 
+    "id": "./index.html",
+    "display":"standalone",
+    "background_color": "#ffffff",
+	"theme_color": "#ffffff",
+	"orientation": "portrait-primary",
+    "icons": [
+
+        {
+          "src": "./img/icons/testIcon.png",
+          "sizes": "58x58",
+          "type": "image/png",
+          "purpose": "maskable"
+        },
+
+        {
+            "src": "./img/icons/Bigtesticon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+          },
+
+          
+        {
+          "src": "./img/icons/icon144.png",
+          "sizes": "144x144",
+          "type": "image/png",
+          "purpose": "any"
+        }
+        
+
+        ]
+
+}
